@@ -1,0 +1,36 @@
+from pyquery import *
+import requests
+from bs4 import BeautifulSoup
+ 
+def check_webpage_content(url, strings_to_find):
+    try:
+        # Send a GET request to the webpage
+        response = requests.get(url)
+        response.raise_for_status()  # Raise an error if the request failed
+ 
+        # Parse the webpage content
+        soup = BeautifulSoup(response.text, 'html.parser')
+ 
+        # Convert the soup object to a string for searching
+        page_text = soup.get_text()
+ 
+        # Check for each string in the page content
+        missing_elements = [string for string in strings_to_find if string not in page_text]
+ 
+        if not missing_elements:
+            print("Everything is correct")
+        else:
+            print("Missing string elements:", missing_elements)
+ 
+    except requests.exceptions.RequestException as e:
+        print(f"An error occurred: {e}")
+ 
+if __name__ == "__main__":
+    # Input: URL of the webpage to search
+    url = input("Enter the URL of the webpage to search: ")
+ 
+    # Input: Strings to find (separated by commas)
+    strings_input = input("Enter the strings to find (separated by commas): ")
+    strings_to_find = [string.strip() for string in strings_input.split(",")]
+ 
+    check_webpage_content(url, strings_to_find)
