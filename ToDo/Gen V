@@ -1,0 +1,43 @@
+Sub ConnectShapesBasedOnText()
+
+    Dim pg As Visio.page
+    Dim shp As Visio.Shape
+    Dim vsoConnectShape1 As Visio.Shape
+    Dim vsoConnectShape2 As Visio.Shape
+    Dim connector As Visio.Shape
+
+    Set pg = Visio.ActivePage
+
+    If Not pg Is Nothing Then
+        For Each shp In pg.Shapes
+            # Check shape's text
+            If InStr(1, shp.Text, "VxRail S670") > 0 Then
+                Set vsoConnectShape1 = shp
+            ElseIf InStr(1, shp.Text, "Z9264F-ON") > 0 Then
+                Set vsoConnectShape2 = shp
+            End If
+        Next shp
+        
+        # Ensure both shapes are identified before making a connection
+        If Not vsoConnectShape1 Is Nothing And Not vsoConnectShape2 Is Nothing Then
+            
+            # Create a new connector
+            Set connector = pg.Drop(Visio.Application.ConnectorToolDataObject, 0, 0)
+            
+            # Use the GlueTo method for more control over connection points
+            connector.CellsU("BeginX").GlueTo vsoConnectShape1.CellsU("Connections.X21")  ' Use 1 for the second connection
+            connector.CellsU("EndX").GlueTo vsoConnectShape2.CellsU("Connections.X22")
+            
+            # Set the connector color to dark blue
+            connector.CellsU("LineColor").FormulaU = "RGB(0,0,128)"
+            
+            # TODO: You can repeat the above steps for the second connection as needed
+
+        Else
+            MsgBox "Required shapes not found based on their text."
+        End If
+    Else
+        MsgBox "No active page found!"
+    End If
+
+End Sub
