@@ -24,12 +24,16 @@ Sub ConnectShapesBasedOnText()
             # Create a new connector
             Set connector = pg.Drop(Visio.Application.ConnectorToolDataObject, 0, 0)
             
-            # Use the GlueTo method for more control over connection points
+            # GlueTo method for more control over connection points
+            # vsoCellGlueFromBegin.GlueTo vsoCellGlueToObject (use this incase of 2D connector interaction instead of 1d connector interaction)
             connector.CellsU("BeginX").GlueTo vsoConnectShape1.CellsU("Connections.X21")  ' Use 1 for the second connection
             connector.CellsU("EndX").GlueTo vsoConnectShape2.CellsU("Connections.X22")
             
             # Set the connector color to dark blue
             connector.CellsU("LineColor").FormulaU = "RGB(0,0,128)"
+
+            # Set connector color to Light blue (dual colour option, using color as the ode reads that grammar)
+            #connector.CellsU("LineColor").FormulaU = "RGB(173,216,230)"
             
             # TODO: You can repeat the above steps for the second connection as needed
 
