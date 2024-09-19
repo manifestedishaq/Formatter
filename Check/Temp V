@@ -1,0 +1,31 @@
+#If VBA7 And Win64 Then
+    Private Declare PtrSafe Function GetOpenFileName Lib "comdlg32.dll" Alias "GetOpenFileNameW" (pOpenFileName As OPENFILENAME) As LongPtr
+#End If
+
+Private Type OPENFILENAME
+    lStructSize As Long
+    hwndOwner As LongPtr
+    hInstance As LongPtr
+    lpstrFilter As String
+    lpstrCustomFilter As String
+    nMaxCustFilter As Long
+    nFilterIndex As Long
+    lpstrFile As String
+    nMaxFile As Long
+    lpstrFileTitle As String
+    nMaxFileTitle As Long
+    lpstrInitialDir As String
+    lpstrTitle As String
+    Flags As Long
+    nFileOffset As Integer
+    nFileExtension As Integer
+    lpstrDefExt As String
+    lCustData As LongPtr
+    lpfnHook As LongPtr
+    lpTemplateName As String
+End Type
+
+Sub ImportStencilsFromVisioFile()
+    ' Show the UserForm to prompt the user to select a Visio file
+    ImportVisio.Show ' Replace ImportVisio with the actual name of your UserForm
+End Sub
