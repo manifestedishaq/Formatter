@@ -11,6 +11,7 @@ Sub ConnectShapesBasedOnText()
     If Not pg Is Nothing Then
         For Each shp In pg.Shapes
             # Check shape's text
+            # here shape refers to the name of models in vxrail connections the models need to be reconfigured and set up for vxrail 
             If InStr(1, shp.Text, "VxRail S670") > 0 Then
                 Set vsoConnectShape1 = shp
             ElseIf InStr(1, shp.Text, "Z9264F-ON") > 0 Then
